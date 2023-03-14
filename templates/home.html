@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>知识增强的AI问诊</title>
+    <style>
+        /* body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: Arial, Helvetica, sans-serif;
+        } */
+
+        #search-form {
+            display: flex;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            flex-direction: column;
+            justify-content: center;
+            width: 80%;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 8px 16px;
+            font-size: 16px;
+            border: none;
+            border-bottom: 2px solid #8f8f8f;
+            outline: none;
+            margin-bottom: 16px;
+        }
+
+        #search-button {
+            background-color: #0077ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        #search-button:hover {
+            background-color: #0066cc;
+        }
+
+        #search-result {
+            display: none;
+            flex-direction: row;
+            margin-top: 16px;
+        }
+
+        #chat_res {
+            flex: 1;
+        }
+
+        #know_res {
+            flex: 1;
+        }
+
+        #search-result pre {
+            font-size: 14px;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #list {
+            border-radius: 10px;
+            background: linear-gradient(#ffffff, #f0f0f0);
+            padding: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="search-form">
+        <h1>知识增强的AI问诊</h1>
+        <input type="text" id="search-input" placeholder="请输入内容">
+        <button type="button" id="search-button">提问</button>
+        <div id="search-result">
+            <pre id="chat_res"></pre>
+            <div id="know_res">
+                <h2>相关知识</h2>
+                <ul id="list">
+                </ul>
+            </div>
+        </div>
+        <script>
+            function displayList(items) {
+                const myList = document.getElementById("list");
+                myList.innerHTML = "";
+                items.forEach(function (disease) {
+                    // 创建列表项
+                    const li = document.createElement("li");
+
+                    // 创建标题元素
+                    const title = document.createElement("div");
+                    title.classList.add("title");
+                    title.innerText = disease.substring(disease.indexOf("：") + 1, disease.indexOf(" ") + 1);
+                    title.style.cursor = "pointer"; // 将光标设置为指针
+                    title.style.color = "red"; // 将标题设置为红色字体
+
+                    // 创建内容元素
+                    const content = document.createElement("div");
+                    content.classList.add("content");
+                    content.innerText = disease.substring(disease.indexOf(" ") + 1);
+
+                    // 将标题和内容添加到列表项中
+                    li.appendChild(title);
+                    li.appendChild(content);
+
+                    // 为标题添加点击事件，用于折叠/展开列表项的内容
+                    title.addEventListener("click", function () {
+                        content.classList.toggle("hidden");
+                    });
+
+                    // 将列表项添加到列表中
+                    myList.appendChild(li);
+                });
+            }
+
+            function show_result(jsonData) {
+                chat_res = jsonData[0]
+                know_res = jsonData[1]
+                searchResult.style.display = 'block';
+                displayList(know_res)
+                searchResultText.textContent = chat_res;
+            }
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const searchResult = document.getElementById('search-result');
+            const searchResultText = document.getElementById('chat_res');
+
+            searchButton.addEventListener('click', () => {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    const url = `http://127.0.0.1:5000/search?q=${searchTerm}`;
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(data => {
+                            const jsonData = JSON.parse(data);
+                            show_result(jsonData);
+                        })
+                        .catch(error => console.error(error));
+                }
+            });
+        </script>
+</body>
+
+</html>
