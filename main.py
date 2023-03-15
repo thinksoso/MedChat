@@ -9,15 +9,18 @@ from tools.vector import server_init
 app = Flask(__name__)
 server_init()
 
-@app.route('/',methods=["GET", "POST"])
+
+@app.route('/', methods=["GET", "POST"])
 def index():
     return render_template("home.html")
 
-@app.route('/search',methods=["GET", "POST"])
+
+@app.route('/search', methods=["GET", "POST"])
 def search():
     text = request.args.get("q")
     output = chat(text)
-    return json.dumps(output,ensure_ascii=False).encode("UTF-8")
+    return json.dumps(output, ensure_ascii=False).encode("UTF-8")
 
-if __name__=="__main__":
-    app.run(host='0.0.0.0',debug=False)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=False)
