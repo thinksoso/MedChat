@@ -2,3 +2,7 @@
 1. 根据输入检索相关医学知识
 2. prompt改造
 3. chatgpt生成回复
+
+![demo演示](docs/images/demo.png)
+
+

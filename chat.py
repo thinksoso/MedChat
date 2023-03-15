@@ -3,7 +3,7 @@ import openai
 import pdb
 import json
 from tools.vector import retrive_top_k
-OPENAI_API_KEY = "Your_Openai_Key"
+OPENAI_API_KEY = "YOUR_OPENAI_KEY"
 openai.api_key = OPENAI_API_KEY
 
 # messages=[
@@ -21,7 +21,8 @@ def chat(text):
     ]
 
     knowledges = retrive_top_k(text)
-    m_knowledges = " ".join([str(i+1)+ "." + k for i, k in enumerate(knowledges)])
+    m_knowledges = " ".join(
+        [str(i+1) + "." + k for i, k in enumerate(knowledges)])
     m_knowledges = "用户的提问是:"+text+" 你有以下知识可以作为补充参考,需要根据用户提问选择有用的知识:" + m_knowledges
     m_knowledges = m_knowledges + " 请根据专业知识和常识判断用户可能患的病,给出具体病情分析和建议"
 
@@ -34,4 +35,4 @@ def chat(text):
     return_text = return_text.strip()
     print(return_text)
     print(knowledges)
-    return [return_text,knowledges]
+    return [return_text, knowledges]
