@@ -3,15 +3,22 @@ import openai
 import pdb
 import json
 from tools.vector import retrive_top_k
-OPENAI_API_KEY = "YOUR_OPENAI_KEY"
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 openai.api_key = OPENAI_API_KEY
-
+save_dir = "./chat_history.txt"
 # messages=[
 #       {"role": "system", "content": "You are a helpful assistant."},
 #       {"role": "user", "content": "Who won the world series in 2020?"},
 #       {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
 #       {"role": "user", "content": "Where was it played?"}
 #   ]
+
+
+def save_chat(data):
+    with open(save_dir, "a") as f:
+        data = json.dumps(data, ensure_ascii=False)
+        f.write(data)
+        f.write("\n")
 
 
 def chat(text):
@@ -35,4 +42,5 @@ def chat(text):
     return_text = return_text.strip()
     print(return_text)
     print(knowledges)
+    save_chat({"query": text, "knowledges": knowledges, "response": return_text})
     return [return_text, knowledges]
