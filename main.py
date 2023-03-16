@@ -18,9 +18,10 @@ def index():
 @app.route('/search', methods=["GET", "POST"])
 def search():
     text = request.args.get("q")
+    print(text)
     output = chat(text)
     return json.dumps(output, ensure_ascii=False).encode("UTF-8")
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False)
+    app.run(host='0.0.0.0', debug=True)

@@ -143,7 +143,7 @@
             searchButton.addEventListener('click', () => {
                 const searchTerm = searchInput.value.trim();
                 if (searchTerm) {
-                    const url = `http://127.0.0.1:5000/search?q=${searchTerm}`;
+                    const url = `/search?q=${searchTerm}`;
                     fetch(url)
                         .then(response => response.text())
                         .then(data => {
