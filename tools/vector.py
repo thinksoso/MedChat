@@ -70,4 +70,4 @@ def server_init():
 if __name__ == "__main__":
     w2v_model = SentenceModel()
     compute_save_emb(
-        w2v_model, "/users10/cliu/work/medical_2030/med_chat/knowledge_base/disease.txt")
+        w2v_model, "./knowledge_base/disease.txt")
