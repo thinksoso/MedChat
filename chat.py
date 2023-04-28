@@ -3,7 +3,8 @@ import openai
 import pdb
 import json
 from tools.vector import retrive_top_k
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+# OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+OPENAI_API_KEY = "Your_Openai_API_KEY"
 openai.api_key = OPENAI_API_KEY
 save_dir = "./chat_history.txt"
 # messages=[

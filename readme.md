@@ -9,6 +9,15 @@
 3. chatgpt生成回复
 
 ## 快速上手
+### 准备工作
+安装环境
+```
+pip install -r requirements.txt
+```
+设置api key
+```
+修改./chat.py中第7行"Your_Openai_API_KEY"，替换为你的openai的api key
+```
 ### 运行项目
 ```
 python main.py

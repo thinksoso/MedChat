@@ -1,5 +1,4 @@
 cmekg/
-*.txt
 chat_history.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
